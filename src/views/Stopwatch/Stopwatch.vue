@@ -1,10 +1,31 @@
 <template>
   <div class="container">
     <div class="counterGrid">
-      <Counter />
+      <Counter :duration-in-ms="deltaTimeInMs" />
       <div class="rowFlex">
-        <el-button type="success" class="bigButton" plain @click="unFocus"
+        <el-button
+          v-if="!hasStarted"
+          type="success"
+          class="bigButton"
+          plain
+          @click="startClicked"
           >Start</el-button
+        >
+        <el-button
+          v-if="hasStarted && !isPaused"
+          type="primary"
+          class="bigButton"
+          plain
+          @click="pauseClicked"
+          >Pause</el-button
+        >
+        <el-button
+          v-if="hasStarted && isPaused"
+          type="success"
+          class="bigButton"
+          plain
+          @click="resumeClicked"
+          >Resume</el-button
         >
         <el-button type="warning" class="bigButton" plain @click="unFocus"
           >Split</el-button
@@ -22,11 +43,30 @@
 </template>
 
 <script lang="ts" setup>
+import { useTimer } from "@/services/useTimer";
 import Counter from "./Counter.vue";
 import SplitsTable from "./SplitsTable.vue";
 
+const { start, pause, resume, deltaTimeInMs, hasStarted, isPaused } =
+  useTimer();
+
 const unFocus = (e: any) => {
   e.target.blur();
+};
+
+const startClicked = (e: any) => {
+  start();
+  unFocus(e);
+};
+
+const pauseClicked = (e: any) => {
+  pause();
+  unFocus(e);
+};
+
+const resumeClicked = (e: any) => {
+  resume();
+  unFocus(e);
 };
 </script>
 

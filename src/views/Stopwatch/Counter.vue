@@ -1,5 +1,18 @@
+<script lang="ts" setup>
+import moment from "moment";
+import { computed, defineProps } from "vue";
+
+const props = defineProps<{
+  durationInMs: number;
+}>();
+
+const displayTimer = computed(() =>
+  moment.utc(props.durationInMs).format("HH:mm:ss:S")
+);
+</script>
+
 <template>
-  <div class="counterContainer">00:00:00:0</div>
+  <div class="counterContainer">{{ displayTimer }}</div>
 </template>
 
 <style scoped>
