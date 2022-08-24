@@ -60,6 +60,6 @@ const unFocus = (e: any) => {
 }
 
 .bigButton {
-  font-size: 3em;
+  font-size: 3rem;
 }
 </style>

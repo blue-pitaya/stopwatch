@@ -1,9 +1,10 @@
 <template>
-  <div class="counterContainer">0:00:00:00</div>
+  <div class="counterContainer">00:00:00:0</div>
 </template>
 
 <style scoped>
 .counterContainer {
-  font-size: 10em;
+  font-size: 10rem;
+  color: #cccccc;
 }
 </style>
