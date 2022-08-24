@@ -1,36 +1,36 @@
 <script lang="ts" setup>
 import { useSplitter } from "@/services/useSplitter";
 import { useTimer } from "@/services/useTimer";
+import { ElMessageBox } from "element-plus";
+import { ref } from "vue";
 import Counter from "./Counter.vue";
 import SplitsTable from "./SplitsTable.vue";
 
-const { start, pause, resume, deltaTimeInMs, hasStarted, isPaused } =
+const { start, pause, resume, deltaTimeInMs, hasStarted, isPaused, reset } =
   useTimer();
-
 const splitter = useSplitter();
 
-const splitClicked = (e: any) => {
+const splitClicked = () => {
   splitter.add(deltaTimeInMs.value);
-  unFocus(e);
 };
 
-const unFocus = (e: any) => {
-  e.target.blur();
-};
-
-const startClicked = (e: any) => {
+const startClicked = () => {
   start();
-  unFocus(e);
 };
 
-const pauseClicked = (e: any) => {
+const pauseClicked = () => {
   pause();
-  unFocus(e);
 };
 
-const resumeClicked = (e: any) => {
+const resumeClicked = () => {
   resume();
-  unFocus(e);
+};
+
+const resetClicked = () => {
+  ElMessageBox.confirm("Are you sure?").then(() => {
+    reset();
+    splitter.clear();
+  });
 };
 </script>
 
@@ -45,6 +45,7 @@ const resumeClicked = (e: any) => {
           class="bigButton"
           plain
           @click="startClicked"
+          @focus="(e: any) => e.target.blur()"
           >Start</el-button
         >
         <el-button
@@ -53,6 +54,7 @@ const resumeClicked = (e: any) => {
           class="bigButton"
           plain
           @click="pauseClicked"
+          @focus="(e: any) => e.target.blur()"
           >Pause</el-button
         >
         <el-button
@@ -61,9 +63,15 @@ const resumeClicked = (e: any) => {
           class="bigButton"
           plain
           @click="resumeClicked"
+          @focus="(e: any) => e.target.blur()"
           >Resume</el-button
         >
-        <el-button type="warning" class="bigButton" plain @click="splitClicked"
+        <el-button
+          type="warning"
+          class="bigButton"
+          plain
+          @click="splitClicked"
+          @focus="(e: any) => e.target.blur()"
           >Split</el-button
         >
       </div>
@@ -78,7 +86,13 @@ const resumeClicked = (e: any) => {
     </div>
     <div>
       <el-button plain>Export</el-button>
-      <el-button type="danger" plain>Reset</el-button>
+      <el-button
+        type="danger"
+        plain
+        @click="resetClicked"
+        @focus="(e: any) => e.target.blur()"
+        >Reset</el-button
+      >
     </div>
   </div>
 </template>

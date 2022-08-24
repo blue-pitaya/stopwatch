@@ -30,5 +30,9 @@ export const useSplitter = () => {
     );
   };
 
-  return { marks, add, changeDescription };
+  const clear = () => {
+    marks.value = [];
+  };
+
+  return { marks, add, changeDescription, clear };
 };

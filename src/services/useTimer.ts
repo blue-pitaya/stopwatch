@@ -18,12 +18,17 @@ export const useTimer = () => {
     immediate: false,
   });
 
-  const start = () => {
+  const reset = () => {
+    pause();
     startTime.value = moment();
     lastTime.value = moment();
     pausedDurationMs.value = 0;
     counter.value = 0;
+    isPaused.value = false;
+  };
 
+  const start = () => {
+    reset();
     resume();
   };
 
@@ -64,5 +69,6 @@ export const useTimer = () => {
     deltaTimeInMs,
     hasStarted,
     isPaused,
+    reset,
   };
 };

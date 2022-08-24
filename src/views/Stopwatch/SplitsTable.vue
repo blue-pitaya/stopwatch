@@ -2,13 +2,7 @@
 import { SplittedMark } from "@/services/useSplitter";
 import moment from "moment";
 import { Edit } from "@element-plus/icons-vue";
-import {
-  computed,
-  defineProps,
-  defineEmits,
-  nextTick,
-  getCurrentInstance,
-} from "vue";
+import { computed, defineProps, defineEmits } from "vue";
 import SplitsTableEditDescription from "./SplitsTableEditDescription.vue";
 
 interface TableRow {
