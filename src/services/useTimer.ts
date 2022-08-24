@@ -1,7 +1,7 @@
 import { computed } from "@vue/reactivity";
 import { useInterval } from "@vueuse/shared";
 import moment from "moment";
-import { ref, watch, watchEffect } from "vue";
+import { ref, watch } from "vue";
 
 export const useTimer = () => {
   const startTime = ref(moment());

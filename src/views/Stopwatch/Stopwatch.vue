@@ -27,13 +27,13 @@
           @click="resumeClicked"
           >Resume</el-button
         >
-        <el-button type="warning" class="bigButton" plain @click="unFocus"
+        <el-button type="warning" class="bigButton" plain @click="splitClicked"
           >Split</el-button
         >
       </div>
     </div>
     <div>
-      <SplitsTable />
+      <SplitsTable :marks="splitter.marks.value" />
     </div>
     <div>
       <el-button plain>Export</el-button>
@@ -43,12 +43,20 @@
 </template>
 
 <script lang="ts" setup>
+import { useSplitter } from "@/services/useSplitter";
 import { useTimer } from "@/services/useTimer";
 import Counter from "./Counter.vue";
 import SplitsTable from "./SplitsTable.vue";
 
 const { start, pause, resume, deltaTimeInMs, hasStarted, isPaused } =
   useTimer();
+
+const splitter = useSplitter();
+
+const splitClicked = (e: any) => {
+  splitter.add(deltaTimeInMs.value);
+  unFocus(e);
+};
 
 const unFocus = (e: any) => {
   e.target.blur();

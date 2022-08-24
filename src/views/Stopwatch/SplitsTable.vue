@@ -1,11 +1,22 @@
 <script lang="ts" setup>
-const tableData = [
-  {
-    total: "00:03:45:2",
-    interval: "00:03:45:2",
-    description: "coding",
-  },
-];
+import { SplittedMark } from "@/services/useSplitter";
+import moment from "moment";
+import { computed, defineProps } from "vue";
+
+const props = defineProps<{
+  marks: Array<SplittedMark>;
+}>();
+
+const tableData = computed(() =>
+  props.marks
+    .slice()
+    .reverse()
+    .map((mark) => ({
+      totalTime: moment.utc(mark.totalTimeInMs).format("HH:mm:ss:S"),
+      interval: moment.utc(mark.intervalInMs).format("HH:mm:ss:S"),
+      description: mark.description,
+    }))
+);
 </script>
 
 <template>
@@ -16,7 +27,7 @@ const tableData = [
     cell-class-name="ok"
     size="large"
   >
-    <el-table-column prop="total" label="Total" width="150" />
+    <el-table-column prop="totalTime" label="Total" width="150" />
     <el-table-column prop="interval" label="Interval" width="150" />
     <el-table-column prop="description" label="Description" />
   </el-table>
