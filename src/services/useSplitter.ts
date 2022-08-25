@@ -1,4 +1,5 @@
-import { ref } from "vue";
+import { useStorage } from "@vueuse/core";
+import { computed } from "vue";
 
 export interface SplittedMark {
   id: number;
@@ -7,32 +8,46 @@ export interface SplittedMark {
   description: string;
 }
 
+interface SplitterState {
+  nextId: number;
+  marks: Array<SplittedMark>;
+  lastMarkMs: number; //TODO: can be calculated
+}
+
+const defaultState: SplitterState = {
+  nextId: 1,
+  marks: [],
+  lastMarkMs: 0,
+};
+
+const splitterId = "splitter-state";
+
 export const useSplitter = () => {
-  const nextId = ref<number>(1);
-  const marks = ref<Array<SplittedMark>>([]);
-  const lastMarkMs = ref<number>(0);
+  const state = useStorage<SplitterState>(splitterId, defaultState);
 
   const add = (totalTimeInMs: number) => {
-    const intervalInMs = totalTimeInMs - lastMarkMs.value;
-    lastMarkMs.value = totalTimeInMs;
+    const intervalInMs = totalTimeInMs - state.value.lastMarkMs;
+    state.value.lastMarkMs = totalTimeInMs;
     marks.value.push({
-      id: nextId.value,
+      id: state.value.nextId,
       totalTimeInMs,
       intervalInMs,
       description: "",
     });
-    nextId.value = nextId.value + 1;
+    state.value.nextId = state.value.nextId + 1;
   };
 
   const changeDescription = (id: number, description: string) => {
-    marks.value = marks.value.map((m) =>
+    state.value.marks = marks.value.map((m) =>
       m.id === id ? { ...m, description } : m
     );
   };
 
   const clear = () => {
-    marks.value = [];
+    state.value = defaultState;
   };
+
+  const marks = computed(() => state.value.marks);
 
   return { marks, add, changeDescription, clear };
 };

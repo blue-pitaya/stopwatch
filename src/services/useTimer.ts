@@ -2,7 +2,7 @@ import { computed } from "@vue/reactivity";
 import { useStorage } from "@vueuse/core";
 import { useInterval } from "@vueuse/shared";
 import moment from "moment";
-import { ref, watch } from "vue";
+import { watch } from "vue";
 
 interface TimerState {
   startTimestamp: number;
@@ -15,7 +15,7 @@ interface TimerState {
 const currentTimestamp = () => moment().valueOf();
 
 //Timestamps in miliseconds
-const defaultState = () => ({
+const defaultState = (): TimerState => ({
   startTimestamp: currentTimestamp(),
   lastTimestamp: currentTimestamp(),
   pausedDurationMs: 0,
@@ -23,8 +23,8 @@ const defaultState = () => ({
   counter: 0,
 });
 
-//TODO: unique Id?
-//TODO: toRefs on state?
+const timerId = "timer-state";
+
 export const useTimer = () => {
   const {
     counter,
@@ -35,7 +35,7 @@ export const useTimer = () => {
     immediate: false,
   });
 
-  const state = useStorage<TimerState>("timer-state", defaultState());
+  const state = useStorage<TimerState>(timerId, defaultState());
 
   const hasStarted = computed(() => state.value.counter > 0);
 

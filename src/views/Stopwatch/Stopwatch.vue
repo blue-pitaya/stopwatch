@@ -2,7 +2,6 @@
 import { useSplitter } from "@/services/useSplitter";
 import { useTimer } from "@/services/useTimer";
 import { ElMessageBox } from "element-plus";
-import { ref } from "vue";
 import Counter from "./Counter.vue";
 import SplitsTable from "./SplitsTable.vue";
 
