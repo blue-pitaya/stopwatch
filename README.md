@@ -6,13 +6,13 @@
 
 - Start/pause/resume/reset timer
 - Add timer marks with editable description
+- Whole app state is persistent using local storage
 
 ## Todo
 
 - Custom "split" buttons with default description
 - Description tags
 - Export to file
-- Saving state in local storage
 
 # Building
 
