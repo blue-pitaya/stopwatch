@@ -14,21 +14,23 @@ interface SplitterState {
   lastMarkMs: number; //TODO: can be calculated
 }
 
-const defaultState: SplitterState = {
+//useStorage make ref out of it, so it has to be new instance
+//every time you want reset state...
+const defaultState = (): SplitterState => ({
   nextId: 1,
   marks: [],
   lastMarkMs: 0,
-};
+});
 
 const splitterId = "splitter-state";
 
 export const useSplitter = () => {
-  const state = useStorage<SplitterState>(splitterId, defaultState);
+  const state = useStorage<SplitterState>(splitterId, defaultState());
 
   const add = (totalTimeInMs: number) => {
     const intervalInMs = totalTimeInMs - state.value.lastMarkMs;
     state.value.lastMarkMs = totalTimeInMs;
-    marks.value.push({
+    state.value.marks.push({
       id: state.value.nextId,
       totalTimeInMs,
       intervalInMs,
@@ -38,13 +40,13 @@ export const useSplitter = () => {
   };
 
   const changeDescription = (id: number, description: string) => {
-    state.value.marks = marks.value.map((m) =>
+    state.value.marks = state.value.marks.map((m) =>
       m.id === id ? { ...m, description } : m
     );
   };
 
   const clear = () => {
-    state.value = defaultState;
+    state.value = defaultState();
   };
 
   const marks = computed(() => state.value.marks);
