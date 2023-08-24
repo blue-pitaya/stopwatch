@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import moment from "moment";
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 
 const props = defineProps<{
   durationInMs: number;

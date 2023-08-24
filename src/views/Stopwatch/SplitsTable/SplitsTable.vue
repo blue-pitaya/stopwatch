@@ -2,7 +2,7 @@
 import { SplittedMark } from "@/services/useSplitter";
 import moment from "moment";
 import { Edit } from "@element-plus/icons-vue";
-import { computed, defineProps, defineEmits } from "vue";
+import { computed } from "vue";
 import SplitsTableEditDescription from "./SplitsTableEditDescription.vue";
 
 interface TableRow {
@@ -48,13 +48,7 @@ const confirmClicked = (
 </script>
 
 <template>
-  <el-table
-    :data="tableData"
-    border
-    style="width: 100%"
-    cell-class-name="ok"
-    size="large"
-  >
+  <el-table :data="tableData" border style="width: 100%" cell-class-name="ok" size="large">
     <el-table-column prop="totalTime" label="Total" width="150" />
     <el-table-column prop="interval" label="Interval" width="150" />
     <el-table-column prop="description" label="Description">
@@ -64,14 +58,9 @@ const confirmClicked = (
             <div>{{ scope.row.description }}</div>
             <el-button :icon="Edit" circle @click="editClicked(scope.row)" />
           </div>
-          <SplitsTableEditDescription
-            v-else
-            :mark-id="scope.row.id"
-            :description="scope.row.description"
-            @description-changed="
-              (payload) => confirmClicked(scope.row, payload)
-            "
-          />
+          <SplitsTableEditDescription v-else :mark-id="scope.row.id" :description="scope.row.description"
+            @description-changed="(payload) => confirmClicked(scope.row, payload)
+              " />
         </div>
       </template>
     </el-table-column>

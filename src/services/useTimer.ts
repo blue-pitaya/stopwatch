@@ -1,6 +1,5 @@
-import { computed } from "@vue/reactivity";
-import { useStorage } from "@vueuse/core";
-import { useInterval } from "@vueuse/shared";
+import { computed } from "vue";
+import { useStorage, useInterval } from "@vueuse/core";
 import moment from "moment";
 import { watch } from "vue";
 
@@ -67,7 +66,7 @@ export const useTimer = () => {
     },
     {
       flush: "post",
-    }
+    },
   );
 
   const resume = () => {
@@ -83,7 +82,7 @@ export const useTimer = () => {
   const deltaTimeInMs = computed(
     () =>
       state.value.lastTimestamp -
-      (state.value.startTimestamp + state.value.pausedDurationMs)
+      (state.value.startTimestamp + state.value.pausedDurationMs),
   );
 
   const isPaused = computed(() => state.value.isPaused);

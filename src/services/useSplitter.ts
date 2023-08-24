@@ -40,8 +40,8 @@ export const useSplitter = () => {
   };
 
   const changeDescription = (id: number, description: string) => {
-    state.value.marks = state.value.marks.map((m) =>
-      m.id === id ? { ...m, description } : m
+    state.value.marks = state.value.marks.map((m: any) =>
+      m.id === id ? { ...m, description } : m,
     );
   };
 

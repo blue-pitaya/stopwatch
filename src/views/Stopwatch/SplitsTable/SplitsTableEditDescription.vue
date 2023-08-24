@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { nextTick, onMounted, ref, defineProps, defineEmits } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 
 const props = defineProps<{
   markId: number;

@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import Stopwatch from "@/views/Stopwatch/Stopwatch.vue";
+import Stopwatch from "./views/Stopwatch/Stopwatch.vue";
 </script>
 
 <style>
